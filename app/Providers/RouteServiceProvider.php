@@ -39,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapBotRoutes();
     }
 
     /**
@@ -69,5 +69,12 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapBotRoutes()
+    {
+        Route::prefix('webhook')
+            ->namespace($this->namespace . '\Webhook')
+            ->group(base_path('routes/bot.php'));
     }
 }
