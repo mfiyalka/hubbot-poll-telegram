@@ -75,9 +75,11 @@
                                 {{ '@'.$item->customer->username }}
                             @endif
                         </td>
+                        @if (!empty($item->answers))
                         @foreach(unserialize($item->answers) as $answer)
                             <td>{{ $answer }}</td>
                         @endforeach
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>
