@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\ServiceProvider;
+use Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
