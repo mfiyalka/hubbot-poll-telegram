@@ -18,6 +18,7 @@ class TelegramWebhook extends Eloquent
 
     public static function add(Update $update)
     {
+        return true;
         $model = new static;
         $model->update = $update->toArray();
         $model->save();

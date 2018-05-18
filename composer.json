@@ -9,7 +9,6 @@
         "azate/laravel-telegram-login-auth": "^1.0",
         "fideloper/proxy": "^4.0",
         "irazasyed/telegram-bot-sdk": "^3.0",
-        "jenssegers/mongodb": "^3.4",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "predis/predis": "^1.1"
