@@ -34,7 +34,7 @@
 
 <body>
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -45,32 +45,46 @@
             </button>
             <a class="navbar-brand" href="#">PollsterBot</a>
         </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                @auth
-                    <li><a href="https://t.me/hubPollsterBot">Open Bot</a></li>
-                    <li><a href="{{ url('/polls') }}">Polls</a></li>
-                    <li><a href="{{ url('/logout') }}">Logout</a></li>
-                @else
-                    <li><a href="">Open Bot</a></li>
-                @endauth
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
+
     </div>
 </div>
 
 <div class="container">
 
     <div class="starter-template">
-        <h1>PollsterBot</h1>
-        @auth
-            You are logged in as {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
-        @else
-            <div class="title m-b-md">
-                <script async src="https://telegram.org/js/telegram-widget.js?4" data-telegram-login="hubPollsterBot" data-size="large" data-auth-url="auth/telegram/callback" data-request-access="write"></script>
-            </div>
-        @endauth
+        {{--<h1>PollsterBot</h1>--}}
+        <p class="lead">{{ $poll->title }}</p>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    @foreach(unserialize($poll->questions) as $question)
+                        <th>{{ $question }}</th>
+                    @endforeach
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($answers as $item)
+                    <tr>
+                        <td>{{ $item->customer->identifier }}</td>
+                        <td>
+                            @if ($item->customer->username)
+                                {{ '@'.$item->customer->username }}
+                            @endif
+                        </td>
+                        @foreach(unserialize($item->answers) as $answer)
+                            <td>{{ $answer }}</td>
+                        @endforeach
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination -->
+        {{ $answers->links() }}
     </div>
 
 </div><!-- /.container -->

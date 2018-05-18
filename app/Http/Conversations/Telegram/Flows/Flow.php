@@ -2,6 +2,7 @@
 
 namespace App\Http\Conversations\Telegram\Flows;
 
+use App\Components\Storage\TelegramStorage;
 use App\Http\Conversations\Telegram\Traits\HasOptions;
 use App\Http\Conversations\Telegram\Traits\InteractsWithContext;
 use App\Http\Conversations\Telegram\Traits\SendMessages;
@@ -12,7 +13,8 @@ abstract class Flow implements FlowInterface
 {
     use InteractsWithContext,
         HasOptions,
-        SendMessages;
+        SendMessages,
+        TelegramStorage;
 
     /** @var User */
     protected $user;

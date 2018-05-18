@@ -14,11 +14,10 @@ use Telegram\Bot\Objects\Update;
 class TelegramWebhook extends Eloquent
 {
     protected $connection = 'mongodb';
-    protected $collection = 'telegram_webhook';
+    protected $collection = 'webhook';
 
     public static function add(Update $update)
     {
-        return true;
         $model = new static;
         $model->update = $update->toArray();
         $model->save();

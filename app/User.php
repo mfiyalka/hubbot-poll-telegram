@@ -2,9 +2,17 @@
 
 namespace App;
 
+use App\Entities\Customer;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ * @package App
+ *
+ * @property int $id
+ * @method static find($value)
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -15,7 +23,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'id',
+        'name',
+        'email',
+        'password',
+        'first_name',
+        'last_name',
+        'username',
+        'avatar'
     ];
 
     /**
@@ -26,4 +41,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'identifier', 'id');
+    }
 }

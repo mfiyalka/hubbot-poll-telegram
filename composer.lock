@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "46afc8d728c2ee83edd80073247c1862",
+    "content-hash": "1b02ec742e0563564fb8e1243d6210e9",
     "packages": [
+        {
+            "name": "azate/laravel-telegram-login-auth",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/azate/laravel-telegram-login-auth.git",
+                "reference": "d11bb0cabc24dc576be43346f1be0b28a4d87ff4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/azate/laravel-telegram-login-auth/zipball/d11bb0cabc24dc576be43346f1be0b28a4d87ff4",
+                "reference": "d11bb0cabc24dc576be43346f1be0b28a4d87ff4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "5.5.x|5.6.x",
+                "illuminate/support": "5.5.x|5.6.x",
+                "php": ">=7.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Azate\\LaravelTelegramLoginAuth\\TelegramLoginServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Azate\\LaravelTelegramLoginAuth\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artem Didyk",
+                    "email": "5ab1e9ba@gmail.com"
+                }
+            ],
+            "description": "Laravel Telegram Login Auth",
+            "keywords": [
+                "auth",
+                "laravel",
+                "telegram"
+            ],
+            "time": "2018-03-05T20:13:53+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",

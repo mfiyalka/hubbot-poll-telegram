@@ -8,6 +8,6 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    //'Settings' => \App\Http\Conversations\Telegram\Flows\SettingsFlow::class,
+    'NewPoll' => \App\Http\Conversations\Telegram\Flows\NewPollFlow::class,
 
 ];

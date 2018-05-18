@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Entities\Customer;
 use App\Entities\TelegramWebhook;
 use App\Events\Telegram\CommandEvent;
+use App\Http\Conversations\Telegram\Flows\AnswerInlineQueryFlow;
 use App\Http\Conversations\Telegram\Flows\Flow;
 use App\Http\Conversations\Telegram\Traits\InteractsWithContext;
 use Illuminate\Console\Command;
@@ -42,6 +43,8 @@ class TelegramGetUpdatesCommand  extends Command
                     case 'callback_query':
                         $this->handlerCallbackQuery($update);
                         break;
+                    case 'inline_query':
+                        $this->handlerInlineQuery($update);
                 }
 
                 if ($update->updateId) {
@@ -58,7 +61,7 @@ class TelegramGetUpdatesCommand  extends Command
     {
         $message = $update->getMessage();
         $this->user = $message->from;
-        $this->setLanguage();
+        //$this->setLanguage();
 
         if (
             !is_null($entities = $message->entities) &&
@@ -85,7 +88,7 @@ class TelegramGetUpdatesCommand  extends Command
     {
         $data = $update->callbackQuery->data;
         $this->user = $update->callbackQuery->from;
-        $this->setLanguage();
+        //$this->setLanguage();
 
         $flows = config('flows.telegram');
 
@@ -110,6 +113,16 @@ class TelegramGetUpdatesCommand  extends Command
 
             $flow->$state();
         }
+    }
+
+    private function handlerInlineQuery(Update $update)
+    {
+        $this->user = $update->inlineQuery->from;
+
+        $flow = new AnswerInlineQueryFlow();
+        $flow->setUser($this->user);
+        $flow->setUpdate($update);
+        $flow->run();
     }
 
     private function setLanguage()

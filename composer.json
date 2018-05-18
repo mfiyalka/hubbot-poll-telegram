@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.1.3",
+        "azate/laravel-telegram-login-auth": "^1.0",
         "fideloper/proxy": "^4.0",
         "irazasyed/telegram-bot-sdk": "^3.0",
         "jenssegers/mongodb": "^3.4",
