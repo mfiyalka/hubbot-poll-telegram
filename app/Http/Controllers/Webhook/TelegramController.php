@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Webhook;
 
-use App\Entities\Customer;
-use App\Entities\TelegramWebhook;
 use App\Events\Telegram\CommandEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Conversations\Telegram\Flows\AnswerInlineQueryFlow;
 use App\Http\Conversations\Telegram\Flows\Flow;
 use App\Http\Conversations\Telegram\Flows\StartFlow;
 use App\Http\Conversations\Telegram\Traits\InteractsWithContext;
@@ -23,15 +22,12 @@ class TelegramController extends Controller
 
     /**
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws Telegram\Bot\Exceptions\TelegramSDKException
      */
     public function process()
     {
         $update = Telegram::bot()->getWebhookUpdate();
 
-        /** Insert to MongoDB */
-        TelegramWebhook::add($update);
-
-        //return response('', 200);
         switch ($update->detectType()) {
             case 'message':
                 $this->handlerMessage($update);
@@ -39,6 +35,8 @@ class TelegramController extends Controller
             case 'callback_query':
                 $this->handlerCallbackQuery($update);
                 break;
+            case 'inline_query':
+                $this->handlerInlineQuery($update);
         }
 
         return response('', 200);
@@ -53,7 +51,6 @@ class TelegramController extends Controller
     {
         $message = $update->getMessage();
         $this->user = $message->from;
-        $this->setLanguage();
 
         if (
             !is_null($entities = $message->entities) &&
@@ -86,7 +83,6 @@ class TelegramController extends Controller
     {
         $data = $update->callbackQuery->data;
         $this->user = $update->callbackQuery->from;
-        $this->setLanguage();
 
         $flows = config('flows.telegram');
 
@@ -113,14 +109,17 @@ class TelegramController extends Controller
         }
     }
 
-    private function setLanguage()
+    /**
+     * @param Update $update
+     * @throws Telegram\Bot\Exceptions\TelegramSDKException
+     */
+    private function handlerInlineQuery(Update $update)
     {
-        $user = Customer::where([
-            'messenger' => Customer::TELEGRAM,
-            'identifier' => $this->user->id
-        ])->first();
-        if ($user) {
-            app()->setLocale($user->language);
-        }
+        $this->user = $update->inlineQuery->from;
+
+        $flow = new AnswerInlineQueryFlow();
+        $flow->setUser($this->user);
+        $flow->setUpdate($update);
+        $flow->run();
     }
 }

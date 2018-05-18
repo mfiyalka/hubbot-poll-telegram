@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Entities\Customer;
-use App\Entities\TelegramWebhook;
 use App\Events\Telegram\CommandEvent;
 use App\Http\Conversations\Telegram\Flows\AnswerInlineQueryFlow;
 use App\Http\Conversations\Telegram\Flows\Flow;
@@ -35,7 +33,6 @@ class TelegramGetUpdatesCommand  extends Command
 
             if ($update) {
                 dump($update);
-                TelegramWebhook::add($update);
                 switch (@$update->detectType()) {
                     case 'message':
                         $this->handlerMessage($update);
@@ -61,7 +58,6 @@ class TelegramGetUpdatesCommand  extends Command
     {
         $message = $update->getMessage();
         $this->user = $message->from;
-        //$this->setLanguage();
 
         if (
             !is_null($entities = $message->entities) &&
@@ -88,7 +84,6 @@ class TelegramGetUpdatesCommand  extends Command
     {
         $data = $update->callbackQuery->data;
         $this->user = $update->callbackQuery->from;
-        //$this->setLanguage();
 
         $flows = config('flows.telegram');
 
@@ -115,6 +110,10 @@ class TelegramGetUpdatesCommand  extends Command
         }
     }
 
+    /**
+     * @param Update $update
+     * @throws Telegram\Bot\Exceptions\TelegramSDKException
+     */
     private function handlerInlineQuery(Update $update)
     {
         $this->user = $update->inlineQuery->from;
@@ -123,16 +122,5 @@ class TelegramGetUpdatesCommand  extends Command
         $flow->setUser($this->user);
         $flow->setUpdate($update);
         $flow->run();
-    }
-
-    private function setLanguage()
-    {
-        $user = Customer::where([
-            'messenger' => Customer::TELEGRAM,
-            'identifier' => $this->user->id
-        ])->first();
-        if ($user) {
-            app()->setLocale($user->language);
-        }
     }
 }
