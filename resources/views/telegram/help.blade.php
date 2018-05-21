@@ -1,4 +1,4 @@
-This bot can create simple polls. You can create a poll and share it to a group.
+Цей бот може створити прості опитування. Ви можете створити опитування та поділитися ним, наприклад, з групою.
 
-/newpoll - create a poll
-/polls - show my polls
+/newpoll - створити нове опитування
+/polls - показати мої опитування

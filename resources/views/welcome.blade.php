@@ -48,11 +48,11 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 @auth
-                    <li><a href="https://t.me/hubPollsterBot">Open Bot</a></li>
-                    <li><a href="{{ url('/polls') }}">Polls</a></li>
-                    <li><a href="{{ url('/logout') }}">Logout</a></li>
+                    <li><a href="https://t.me/hubPollsterBot">Відкрити бота</a></li>
+                    <li><a href="{{ url('/polls') }}">Опитування</a></li>
+                    <li><a href="{{ url('/logout') }}">Вихід</a></li>
                 @else
-                    <li><a href="">Open Bot</a></li>
+                    <li><a href="https://t.me/hubPollsterBot">Відкрити бота</a></li>
                 @endauth
             </ul>
         </div><!--/.nav-collapse -->
@@ -65,7 +65,7 @@
     <div class="starter-template">
         <h1>PollsterBot</h1>
         @auth
-            You are logged in as {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
+            Ви ввійшли як {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
         @else
             <div class="title m-b-md">
                 <script async src="https://telegram.org/js/telegram-widget.js?4" data-telegram-login="hubPollsterBot" data-size="large" data-auth-url="auth/telegram/callback" data-request-access="write"></script>

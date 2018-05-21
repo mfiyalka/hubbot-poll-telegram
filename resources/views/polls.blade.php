@@ -53,15 +53,15 @@
 
     <div class="starter-template">
         {{--<h1>PollsterBot</h1>--}}
-        <p class="lead">Your polls</p>
+        <p class="lead">Ваші опитування</p>
 
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Title</th>
-                    <th>Created</th>
+                    <th>Заголовок</th>
+                    <th>Створено</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -32,7 +32,7 @@ class PollFlow extends Flow
         $poll = Poll::where(['id' => $poll_id, 'identifier' => $customer_id])->first();
 
         if (is_null($poll)) {
-            $this->reply('Poll not found');
+            $this->reply('Опитування не знайдено');
             return;
         }
 
@@ -51,7 +51,7 @@ class PollFlow extends Flow
         $keyboard = Keyboard::make()
             ->inline()
             ->row(Keyboard::inlineButton([
-                'text' => 'Show results',
+                'text' => 'Показати результати',
                 'url' => url("/result/{$poll_id}")
             ]));
 

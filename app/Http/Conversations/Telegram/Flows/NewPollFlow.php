@@ -13,7 +13,7 @@ class NewPollFlow extends Flow
      */
     public function start()
     {
-        $this->reply('Let\'s create a new poll. First, send me the title of poll.');
+        $this->reply('Для створення нового опитування, спочатку надішли мені його назву.');
         $this->setContext($this, 'firstQuestion');
     }
 
@@ -24,8 +24,8 @@ class NewPollFlow extends Flow
     {
         $title = $this->update->getMessage()->text;
         $this->userStorage()->save(['last_poll' => ['title' => $title]]);
-        $message = "Creating a new poll: '{$title}'".PHP_EOL.PHP_EOL.
-            "Please send me the first question.";
+        $message = "Створено нове опитування: '{$title}'".PHP_EOL.PHP_EOL.
+            "Будь ласка, надішли мені перше питання.";
         $this->reply($message);
         $this->setContext($this, 'anotherQuestion');
     }
@@ -42,8 +42,8 @@ class NewPollFlow extends Flow
         $storage['questions'][] = $question;
 
         $this->userStorage()->save(['last_poll' => $storage]);
-        $message = "Good. Now send me another question.".PHP_EOL.PHP_EOL.
-            "When you've added enough questions, simply send /done to publish the poll.";
+        $message = "Добре. Тепер надішли мені інше питання.".PHP_EOL.PHP_EOL.
+            "Коли ти додасиш достатньо питань, просто відправ мені /done, щоб опублікувати опитування.";
         $this->reply($message);
         $this->setContext($this, 'anotherQuestion');
     }
@@ -63,13 +63,13 @@ class NewPollFlow extends Flow
         }
 
         $username = config('telegram.bots.mybot.username');
-        $message = "👍 Poll created. You can now publish it to a group or send it to your friends in a private message. To do this, tap the button below or start your message in any other chat with @{$username} and select one of your polls to send.";
+        $message = "👍 Опитування створено. Тепер ти можеш опублікувати його в групі або надіслати його своїм друзям у приватному повідомленні. Для цього натисни кнопку нижче або розпочни набирати повідомлення в будь-якому іншому чаті з @{$username} і вибери одне з твоїх опитувань для відправки.";
         $this->reply($message);
 
         $keyboard = Keyboard::make()
             ->inline()
             ->row(Keyboard::inlineButton([
-                'text' => 'Publish poll',
+                'text' => 'Опублікувати опитування',
                 'switch_inline_query' => $title
             ]));
         $message = "<b>{$title}</b>".PHP_EOL.PHP_EOL.$questions;

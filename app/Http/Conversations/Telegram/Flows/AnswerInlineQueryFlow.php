@@ -43,7 +43,7 @@ class AnswerInlineQueryFlow extends Flow
             $keyboard = Keyboard::make()
                 ->inline()
                 ->row(Keyboard::inlineButton([
-                    'text' => 'Poll',
+                    'text' => 'Пройти опитування',
                     'url' => "t.me/{$username}?start=p{$poll->id}"
                 ]));
 

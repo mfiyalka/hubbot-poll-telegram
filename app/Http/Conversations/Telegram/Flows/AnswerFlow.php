@@ -57,7 +57,7 @@ class AnswerFlow extends Flow
         $count = count($questions);
 
         if ($page == $count) {
-            $this->reply('Thanks for the answers');
+            $this->reply('Дякую за відповіді!');
             $this->clearContext();
             return;
         }

@@ -12,6 +12,6 @@ class StartFlow extends Flow
     public function run()
     {
         Customer::addFromTelegram($this->user);
-        $this->reply('Hello!');
+        $this->reply('Привіт! Я бот-опитувальник. Для отримання допомоги, відправ мені команду /help');
     }
 }
